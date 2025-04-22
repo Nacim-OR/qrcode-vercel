@@ -16,7 +16,7 @@ export default async function handler(req, res) {
         day: '2-digit'
       }).format(new Date());
   
-      const today = new Date(parisDateStr + 'T00:00:00'); // à minuit heure locale
+      const today = new Date(parisDateStr + 'T00:05:00'); // à minuit heure locale
   
       const daysElapsed = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
       const urls = json.values.map(row => row[1]);
