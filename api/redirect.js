@@ -8,7 +8,16 @@ export default async function handler(req, res) {
       const response = await fetch(sheetUrl);
       const json = await response.json();
   
-      const today = new Date();
+      // Calcul manuel de la date à l'heure de Paris (YYYY-MM-DD uniquement)
+      const parisDateStr = new Intl.DateTimeFormat('fr-CA', {
+        timeZone: 'Europe/Paris',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+      }).format(new Date());
+  
+      const today = new Date(parisDateStr + 'T00:00:00'); // à minuit heure locale
+  
       const daysElapsed = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
       const urls = json.values.map(row => row[1]);
       const index = daysElapsed % urls.length;
@@ -20,3 +29,4 @@ export default async function handler(req, res) {
       res.status(500).send("Erreur : " + e.message);
     }
   }
+  
