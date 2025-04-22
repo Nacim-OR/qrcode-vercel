@@ -8,8 +8,11 @@ export default async function handler(req, res) {
       const response = await fetch(sheetUrl);
       const json = await response.json();
   
-      const today = new Date();
-      const daysElapsed = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
+      // Force l'heure locale à Europe/Paris
+      const nowParis = new Date().toLocaleString("fr-FR", { timeZone: "Europe/Paris" });
+      const todayParis = new Date(nowParis);
+  
+      const daysElapsed = Math.floor((todayParis - startDate) / (1000 * 60 * 60 * 24));
       const urls = json.values.map(row => row[1]);
       const index = daysElapsed % urls.length;
   
