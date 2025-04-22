@@ -8,15 +8,26 @@ export default async function handler(req, res) {
       const response = await fetch(sheetUrl);
       const json = await response.json();
   
-      // Utilisation de l'heure de Paris
       const nowParis = new Date().toLocaleString("fr-FR", { timeZone: "Europe/Paris" });
       const today = new Date(nowParis);
   
       const daysElapsed = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
-      const urls = json.values.map(row => row[1]);
-      const index = daysElapsed % urls.length;
   
+      console.log("👉 Date Paris :", today);
+      console.log("👉 Jours écoulés :", daysElapsed);
+      console.log("👉 Données JSON reçues :", JSON.stringify(json));
+  
+      const urls = json.values?.map(row => row[1]);
+      const index = daysElapsed % urls.length;
       const redirectUrl = urls[index];
+  
+      console.log("👉 Index vidéo :", index);
+      console.log("👉 URL sélectionnée :", redirectUrl);
+  
+      if (!redirectUrl) {
+        throw new Error("Aucune URL trouvée pour l'index " + index);
+      }
+  
       res.writeHead(302, { Location: redirectUrl });
       res.end();
     } catch (e) {
