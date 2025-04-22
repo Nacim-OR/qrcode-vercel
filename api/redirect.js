@@ -8,17 +8,18 @@ export default async function handler(req, res) {
       const response = await fetch(sheetUrl);
       const json = await response.json();
   
-      // Calcul manuel de la date à l'heure de Paris (YYYY-MM-DD uniquement)
-      const parisDateStr = new Intl.DateTimeFormat('fr-CA', {
-        timeZone: 'Europe/Paris',
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit'
-      }).format(new Date());
+      // Heure actuelle à Paris
+      const nowParisStr = new Date().toLocaleString("en-US", { timeZone: "Europe/Paris" });
+      const nowParis = new Date(nowParisStr);
   
-      const today = new Date(parisDateStr + 'T00:10:00'); // à minuit heure locale
+      // Date de "bascule" aujourd'hui à 00h10 (heure de Paris)
+      const pivot = new Date(nowParis);
+      pivot.setHours(0, 15, 0, 0);
   
-      const daysElapsed = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
+      // Si on est avant 00h10, on reste sur le jour précédent
+      const effectiveDate = nowParis < pivot ? new Date(nowParis.setDate(nowParis.getDate() - 1)) : nowParis;
+  
+      const daysElapsed = Math.floor((effectiveDate - startDate) / (1000 * 60 * 60 * 24));
       const urls = json.values.map(row => row[1]);
       const index = daysElapsed % urls.length;
   
