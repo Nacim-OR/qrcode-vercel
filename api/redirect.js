@@ -1,7 +1,7 @@
 export default async function handler(req, res) {
     const sheetId = "1gkvJcqNvJ3wIo2eLTN4CpPtzTdtwMNHLmFLiK6r6fmI";
     const sheetName = "Vidéos";
-    const startDate = new Date('2024-01-07');
+    const startDate = new Date('2024-01-05');
   
     try {
       const sheetUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${sheetName}!A2:B?key=${process.env.GOOGLE_API_KEY}`;
