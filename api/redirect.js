@@ -8,10 +8,7 @@ export default async function handler(req, res) {
       const response = await fetch(sheetUrl);
       const json = await response.json();
   
-      // Date actuelle à l'heure de Paris
-      const nowParis = new Date().toLocaleString("fr-FR", { timeZone: "Europe/Paris" });
-      const today = new Date(nowParis);
-  
+      const today = new Date();
       const daysElapsed = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
       const urls = json.values.map(row => row[1]);
       const index = daysElapsed % urls.length;
@@ -23,4 +20,3 @@ export default async function handler(req, res) {
       res.status(500).send("Erreur : " + e.message);
     }
   }
-  
