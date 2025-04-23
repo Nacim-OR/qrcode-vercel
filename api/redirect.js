@@ -14,7 +14,7 @@ export default async function handler(req, res) {
   
       // Date de "bascule" aujourd'hui à 00h10 (heure de Paris)
       const pivot = new Date(nowParis);
-      pivot.setHours(16, 10, 0, 0);
+      pivot.setHours(0, 0, 0, 0);
   
       // Si on est avant 00h10, on reste sur le jour précédent
       const effectiveDate = nowParis < pivot ? new Date(nowParis.setDate(nowParis.getDate() - 1)) : nowParis;
