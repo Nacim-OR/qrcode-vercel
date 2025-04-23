@@ -1,6 +1,6 @@
 export default async function handler(req, res) {
     const sheetId = "1gkvJcqNvJ3wIo2eLTN4CpPtzTdtwMNHLmFLiK6r6fmI";
-    const sheetName = "Vidéos";
+    const sheetName = "CAF";
     const startDate = new Date('2024-01-06');
   
     try {
